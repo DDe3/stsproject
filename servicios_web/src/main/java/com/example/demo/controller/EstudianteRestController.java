@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.to.Estudiante;
 
 @RestController
-@RequestMapping("/estudiantes/uce")
+@RequestMapping("/estudiante")
 public class EstudianteRestController {
 	
 	@GetMapping
 	public Estudiante consultar() {
-		return new Estudiante(23, "Leonardo", "Salinas", 24);
+		return new Estudiante(23, "Ismael", "Lojano", "Guajalo", 24);
 	}
+	
+	
 }
