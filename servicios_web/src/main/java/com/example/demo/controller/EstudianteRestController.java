@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.repository.modelo.Estudiante;
 import com.example.demo.service.IEstudianteService;
-import com.example.demo.to.Estudiante;
 import com.example.demo.to.RequestEstudiante;
 
 @RestController
-@RequestMapping("/estudiantes/uce")
+@RequestMapping("/estudiante")
 public class EstudianteRestController {
 	
 	@Autowired

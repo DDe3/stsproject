@@ -1,8 +1,7 @@
 package com.example.demo.to;
 
+public class RequestPaciente {
 
-public class RequestEstudiante {
-	
 	private Integer id;
 
 	public Integer getId() {
@@ -13,5 +12,4 @@ public class RequestEstudiante {
 		this.id = id;
 	}
 	
-
 }

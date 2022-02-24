@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.to.Estudiante;
+import com.example.demo.repository.modelo.Estudiante;
 
 
 @Repository
@@ -33,7 +33,7 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 
 	@Override
 	public void borrar(Integer id) {
-		Estudiante estu = buscar(id);
+		Estudiante estu = this.buscar(id);
 		this.em.remove(estu);
 		
 	}

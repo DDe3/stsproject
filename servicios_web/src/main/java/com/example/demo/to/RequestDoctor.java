@@ -1,7 +1,6 @@
 package com.example.demo.to;
 
-
-public class RequestEstudiante {
+public class RequestDoctor {
 	
 	private Integer id;
 
@@ -12,6 +11,5 @@ public class RequestEstudiante {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
 
 }

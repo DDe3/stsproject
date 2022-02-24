@@ -1,4 +1,4 @@
-package com.example.demo.to;
+package com.example.demo.repository.modelo;
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "")
+@Table(name = "estudiante")
 public class Estudiante {
 	
 	@Id
