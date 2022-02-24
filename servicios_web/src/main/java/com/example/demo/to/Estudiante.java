@@ -1,14 +1,33 @@
 package com.example.demo.to;
-
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "")
 public class Estudiante {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_estudiante")
+	@SequenceGenerator(name = "seq_estudiante", sequenceName = "seq_estudiante", allocationSize = 1)
+	@Column(name="estu_id")
 	private Integer id;
+	@Column(name="estu_nombre")
 	private String nombre;
+	@Column(name="estu_apellido")
 	private String apellido;
+	@Column(name="estu_direccion")
 	private String direccion;
+	@Column(name="estu_edad")
 	private Integer edad;
+	@Column(name="estu_fechanac")
 	private Date fechaNacimiento;
 	
 	public Estudiante() {}
