@@ -1,7 +1,10 @@
 package com.example.demo.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
@@ -36,6 +39,15 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 		Estudiante estu = this.buscar(id);
 		this.em.remove(estu);
 		
+	}
+
+	@Override
+	public List<Estudiante> buscarPorEdad(Integer edad) {
+		// SELECT * FROM estudiante WHERE estu_edad > edad
+		// SELECT e FROM Estudiante e WHERE edad > :edad
+		TypedQuery<Estudiante> mq = this.em.createQuery("SELECT e FROM Estudiante e WHERE edad > :edad1", Estudiante.class);
+		mq.setParameter("edad1", edad);
+		return mq.getResultList();
 	}
 
 }

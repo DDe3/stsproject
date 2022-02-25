@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +36,12 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		this.estudianteRepository.borrar(id);
 		
 	}
+
+	@Override
+	public List<Estudiante> buscarPorEdad(Integer edad) {
+		return this.estudianteRepository.buscarPorEdad(edad);
+	}
+
+	
 
 }

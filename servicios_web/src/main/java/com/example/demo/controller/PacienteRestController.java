@@ -14,7 +14,7 @@ import com.example.demo.service.IPacienteService;
 import com.example.demo.to.RequestPaciente;
 
 @RestController
-@RequestMapping("/paciente")
+@RequestMapping("/pacientes")
 public class PacienteRestController {
 	
 	@Autowired
