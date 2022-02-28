@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import com.example.demo.repository.modelo.Paciente;
 
 public interface IPacienteService {
@@ -8,5 +10,7 @@ public interface IPacienteService {
 	public void actualizar(Paciente paciente);
 	public void insertar(Paciente paciente);
 	public void borrar(Integer id);
+	List<Paciente> buscarPorEstadoCivil(String ecivil);
+	
 
 }

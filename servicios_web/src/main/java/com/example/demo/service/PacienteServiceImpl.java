@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,11 @@ public class PacienteServiceImpl implements IPacienteService {
 	@Override
 	public void borrar(Integer id) {
 		this.pacienteRepository.borrar(id);
+	}
+
+	@Override
+	public List<Paciente> buscarPorEstadoCivil(String ecivil) {
+		return this.pacienteRepository.buscarPorEstadoCivil(ecivil);
 	}
 	
 	

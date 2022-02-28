@@ -1,7 +1,10 @@
 package com.example.demo.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
@@ -34,6 +37,16 @@ public class DoctorRepositoryImpl implements IDoctorRepository{
 	public void borrar(Integer id) {
 		Doctor doc = this.buscar(id);
 		this.em.remove(doc);
+	}
+
+	@Override
+	public List<Doctor> buscarPorGenero(Character gen) {
+		//SELECT * FROM doctor WHERE doct_genero == gen
+		//SELECT d FROM Doctor d WHERE genero == :gen
+		TypedQuery<Doctor> mq = this.em.createQuery("SELECT d FROM Doctor d WHERE genero = :gen", Doctor.class);
+		mq.setParameter("gen", gen);
+		return mq.getResultList();
+		
 	}
 
 }
