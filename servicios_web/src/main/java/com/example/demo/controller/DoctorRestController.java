@@ -5,6 +5,9 @@ import java.util.List;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.repository.modelo.Doctor;
+import com.example.demo.repository.modelo.Estudiante;
 import com.example.demo.service.IDoctorService;
 import com.example.demo.to.RequestDoctor;
 
@@ -40,6 +45,20 @@ public class DoctorRestController {
 	public List<Doctor> getDoctorPathVariable(@PathParam(value="genero")Character genero) {
 		return this.doctorService.buscarPorGenero(genero);
 	}
+	
+	@GetMapping("/doctores/{idDoctor}/rbody")
+	@ResponseBody
+	public Doctor consultarResponseBody(@PathVariable("idDoctor") Integer idDoctor) {
+		return this.doctorService.buscar(idDoctor);
+	}
+	
+	@GetMapping("/doctores/{idDoctor}/status")
+	public ResponseEntity<Doctor> consultarResponseEntity(@PathVariable("idDoctor") Integer idDoctor) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("msg", "Doctor consultado");
+		return new ResponseEntity<>(this.doctorService.buscar(idDoctor), headers, 299);
+	}
+	
 	
 	
 	@PostMapping
