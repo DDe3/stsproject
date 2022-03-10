@@ -28,113 +28,26 @@ import com.example.demo.to.RequestEstudiante;
 @RestController
 @RequestMapping("/ApiEstudiantes/V1")
 public class EstudianteRestController {
-	
+
 	@Autowired
 	private IEstudianteService estudianteService;
-	
-	@GetMapping
-	public Estudiante consultarRequestBody(@RequestBody RequestEstudiante requestEstudiante) {
-		return this.estudianteService.buscar(requestEstudiante.getId());
-	}
-	
-	@GetMapping("/estudiantes/{idEstudiante}")
-	@ResponseBody
-	public Estudiante consultarPathVariable(@PathVariable("idEstudiante") Integer idEstudiante) {
-		return this.estudianteService.buscar(idEstudiante);
-	}
-	
-	@GetMapping("/estudiantes/entidad/{idEstudiante}")
-	public ResponseEntity<Estudiante> consultarPathVariableEntidad(@PathVariable("idEstudiante") Integer idEstudiante) {
-		return ResponseEntity.ok(this.estudianteService.buscar(idEstudiante));
+
+	@GetMapping(value = "/estudiantes/contenido/aceptacion", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<Estudiante> consultarEstudiante(@RequestBody RequestEstudiante requestEstudiante) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.estudianteService.buscar(requestEstudiante.getId()));
 
 	}
-	
-	@GetMapping("/estudiantes/status/personalizado/{idEstudiante}")
-	public ResponseEntity<Estudiante> consultarPathVariableEntidadPersonalizado(@PathVariable("idEstudiante") Integer idEstudiante) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(this.estudianteService.buscar(idEstudiante));
 
-	}
-	
-	@GetMapping("/estudiantes/status/personalizado2/{idEstudiante}")
-	public ResponseEntity<Estudiante> consultarPathVariableEntidadPersonalizadoDos(@PathVariable("idEstudiante") Integer idEstudiante) {
-		return ResponseEntity.status(230).body(this.estudianteService.buscar(idEstudiante));
-
-	}
-	
-	@GetMapping("/estudiantes/status/personalizadoHeader/{idEstudiante}")
-	public ResponseEntity<Estudiante> consultarPathVariableEntidadPersonalizadoHeader(@PathVariable("idEstudiante") Integer idEstudiante) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("mensaje", "Mensaje personalizado");
-		return new ResponseEntity<>(this.estudianteService.buscar(idEstudiante), headers, 231);
-	}
-	
-	
-	@GetMapping("/estudiantes")
-	public List<Estudiante> consultarRequestParam(@PathParam(value = "edad") Integer edad) {
-		System.out.println("Estudiantes mayores a "+edad);
-		return this.estudianteService.buscarPorEdad(edad);
-	}
-	
-
-	@PostMapping
-	public String insertar(@RequestBody Estudiante estudiante) {
-		this.estudianteService.insertar(estudiante);
-		return "Estudiante insertado";
-	}
-	
-	
-	@PutMapping
-	public String actualizar(@RequestBody Estudiante estudiante) {
-		System.out.println("Peticion");
-		this.estudianteService.actualizar(estudiante);
-		return "Estudiante actualizado";
-	}
-	
-	@DeleteMapping
-	public String eliminar(@RequestBody RequestEstudiante requestEstudiante) {
-		System.out.println("Peticion DELETE");
-		this.estudianteService.borrar(requestEstudiante.getId());
-		return "Estudiante eliminado";
-	}
-	
-	@PatchMapping("/actualizacionParcial")
-	@ResponseBody
-	public String patch(@RequestBody Estudiante estudiante) {
-		System.out.println("Peticion");
-		this.estudianteService.actualizar(estudiante);
-		return "Estudiante actualizado";
-		
-	}
-	
-	
-	
-	
-	
-	
-	@GetMapping( value = "/estudiantes/aceptacion/contenido/{idEstudiante}", 
-				consumes = {	MediaType.APPLICATION_JSON_VALUE,
-								MediaType.APPLICATION_XML_VALUE		}, 
-				produces = {	MediaType.APPLICATION_XML_VALUE,
-								MediaType.APPLICATION_JSON_VALUE   })
-	public ResponseEntity<Estudiante> consultarEstudianteAceptacionContenido(@PathVariable("idEstudiante") Integer idEstudiante,
-			@RequestBody RequestEstudiante requestEstudiante) {
-		if (idEstudiante == requestEstudiante.getId()) {
-			return ResponseEntity.status(230).body(this.estudianteService.buscar(idEstudiante));
+	@DeleteMapping(path = "/estudiantes/contenido/aceptacion", 
+			consumes = MediaType.APPLICATION_XML_VALUE, 
+			produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<String> desmantelarEstudiante(@PathParam(value = "eid") Integer eid, @RequestBody RequestEstudiante requestEstudiante) {
+		if (eid==requestEstudiante.getId()) {
+			estudianteService.borrar(eid);
+			return ResponseEntity.status(HttpStatus.OK).body("Estudiante eliminado");
 		} else {
-			return ResponseEntity.ok(new Estudiante());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo eliminar");
 		}
-		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

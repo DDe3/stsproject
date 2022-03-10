@@ -7,6 +7,7 @@ import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,58 +27,28 @@ import com.example.demo.to.RequestDoctor;
 @RestController
 @RequestMapping("/ApiDoctores/V1")
 public class DoctorRestController {
-	
+
 	@Autowired
 	private IDoctorService doctorService;
-	
-	
+
+
+	@PostMapping(value = "/doctores/contenido", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE }, produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> postDoctor(@RequestBody Doctor doctor) {
+		doctorService.insertar(doctor);
+		return ResponseEntity.status(HttpStatus.CREATED).body("Doctor insertado");
+	}
+
+	@PutMapping(value = "/doctores/contenido", 
+			consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE}, 
+			produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<String> putDoctor(@RequestBody Doctor doctor) {
+		doctorService.actualizar(doctor);
+		return ResponseEntity.ok("Doctor Actualizado");
+	}
+
 	@GetMapping
 	public Doctor getDoctor(@RequestBody RequestDoctor requestDoctor) {
 		return this.doctorService.buscar(requestDoctor.getId());
 	}
-	
-	@GetMapping("/doctores/{idDoctor}")
-	public Doctor getDoctorPathVariable(@PathVariable("idDoctor") Integer id) {
-		return this.doctorService.buscar(id);
-	}
-	
-	@GetMapping("/doctores")
-	public List<Doctor> getDoctorPathVariable(@PathParam(value="genero")Character genero) {
-		return this.doctorService.buscarPorGenero(genero);
-	}
-	
-	@GetMapping("/doctores/{idDoctor}/rbody")
-	@ResponseBody
-	public Doctor consultarResponseBody(@PathVariable("idDoctor") Integer idDoctor) {
-		return this.doctorService.buscar(idDoctor);
-	}
-	
-	@GetMapping("/doctores/{idDoctor}/status")
-	public ResponseEntity<Doctor> consultarResponseEntity(@PathVariable("idDoctor") Integer idDoctor) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("msg", "Doctor consultado");
-		return new ResponseEntity<>(this.doctorService.buscar(idDoctor), headers, 299);
-	}
-	
-	
-	
-	@PostMapping
-	public String insertarDoctor(@RequestBody Doctor doctor) {
-		this.doctorService.insertar(doctor);
-		return "Doctor insertado";
-	}
-	
-	@PutMapping
-	public String actualizarDoctor(@RequestBody Doctor doctor) {
-		this.doctorService.actualizar(doctor);
-		return "Doctor actualizado";
-	}
-	
-	@DeleteMapping
-	public String borrarDoctor(@RequestBody RequestDoctor requestDoctor) {
-		this.doctorService.borrar(requestDoctor.getId());
-		return "Doctor eliminado";
-	}
-	
-
 }

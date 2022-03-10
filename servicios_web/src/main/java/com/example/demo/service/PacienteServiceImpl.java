@@ -41,6 +41,7 @@ public class PacienteServiceImpl implements IPacienteService {
 	public List<Paciente> buscarPorEstadoCivil(String ecivil) {
 		return this.pacienteRepository.buscarPorEstadoCivil(ecivil);
 	}
+
 	
 	
 
