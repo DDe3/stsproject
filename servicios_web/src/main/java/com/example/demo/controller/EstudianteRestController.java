@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus.Series;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -104,6 +105,36 @@ public class EstudianteRestController {
 		return "Estudiante actualizado";
 		
 	}
+	
+	
+	
+	
+	
+	
+	@GetMapping( value = "/estudiantes/aceptacion/contenido/{idEstudiante}", 
+				consumes = {	MediaType.APPLICATION_JSON_VALUE,
+								MediaType.APPLICATION_XML_VALUE		}, 
+				produces = {	MediaType.APPLICATION_XML_VALUE,
+								MediaType.APPLICATION_JSON_VALUE   })
+	public ResponseEntity<Estudiante> consultarEstudianteAceptacionContenido(@PathVariable("idEstudiante") Integer idEstudiante,
+			@RequestBody RequestEstudiante requestEstudiante) {
+		if (idEstudiante == requestEstudiante.getId()) {
+			return ResponseEntity.status(230).body(this.estudianteService.buscar(idEstudiante));
+		} else {
+			return ResponseEntity.ok(new Estudiante());
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
